@@ -1,4 +1,3 @@
-# Import necessary libraries
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -8,14 +7,15 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 
 data = load_breast_cancer()
-X = data.data 
-y = data.target 
+X = data.data  # Features
+y = data.target  # Target variable (0 = malignant, 1 = benign)
 feature_names = data.feature_names
 target_names = data.target_names
 
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
 
+pca = PCA(n_components=2)
 X_pca = pca.fit_transform(X_scaled)
 
 explained_variance_ratio = pca.explained_variance_ratio_
@@ -24,7 +24,7 @@ pca_df = pd.DataFrame(X_pca, columns=['PCA1', 'PCA2'])
 pca_df['Target'] = y
 
 plt.figure(figsize=(8, 6))
-sns.scatterplot(data=pca_df, x='PCA1', y='PCA2', hue='Target', palette='Set1', alpha=0.8)
+sns.scatterplot(data=pca_df, x='PCA1', y='PCA2', hue='Target', palette='Set1')
 plt.title('PCA of Wisconsin Breast Cancer Dataset')
 plt.xlabel('Principal Component 1')
 plt.ylabel('Principal Component 2')
